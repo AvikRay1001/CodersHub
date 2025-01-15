@@ -12,6 +12,7 @@ import { EditorPanelSkeleton } from "./EditorPanelSkeleton";
 import useMounted from "@/hooks/useMounted";
 import ShareSnippetDialog from "./ShareSnippetDialog";
 
+
 function EditorPanel() {
   const clerk = useClerk();
   const [isShareDialogOpen, setisShareDialogOpen] = useState(false);
