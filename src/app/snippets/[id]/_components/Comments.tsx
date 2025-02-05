@@ -8,7 +8,7 @@ import { MessageSquare } from 'lucide-react';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 
-function Comments({snippetId} : {snippetId: Id<"snippets">}) {
+function  Comments({snippetId} : {snippetId: Id<"snippets">}) {
 
   const {user} = useUser();
   const [isSubmitting, setisSubmitting] = useState(false);

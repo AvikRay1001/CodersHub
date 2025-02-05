@@ -35,13 +35,14 @@ function SnippetsPage() {
       snippet.language.toLowerCase().includes(searchQuery.toLowerCase()) ||
       snippet.userName.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesLanguage = !selectedLanguage || snippet.language === selectedLanguage;
+    const matchesLanguage =
+      !selectedLanguage || snippet.language === selectedLanguage;
 
     return matchesSearch && matchesLanguage;
   });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
+    <div className="min-h-screen bg-gradient-to-b from-purple-950 to-purple-850">
       <NavigationHeader />
 
       <div className="relative max-w-7xl mx-auto px-4 py-12">
@@ -50,25 +51,27 @@ function SnippetsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r
-             from-blue-500/10 to-purple-500/10 text-sm text-gray-400 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 border border-black rounded-full bg-gradient-to-t
+             from-purple-950 to-blue-950 text-sm text-gray-400 mb-6"
           >
-            <BookOpen className="w-4 h-4" />
-            Community Code Library
+            <BookOpen className="w-4 h-4 text-white" />
+            <span className="text-white">Community Code Library</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 text-transparent bg-clip-text mb-6"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 text-transparent bg-clip-text mb-6 "
           >
-            Discover & Share Code Snippets
+            <span className="block bg-gradient-to-t from-purple-950 to-slate-300 text-transparent bg-clip-text font-semibold">
+              Discover & Share Code Snippets
+            </span> 
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-400 mb-8"
+            className="text-lg text-blue-400 mb-8"
           >
             Explore a curated collection of code snippets from the community
           </motion.p>
@@ -103,18 +106,24 @@ function SnippetsPage() {
             {popularLanguages.map((lang) => (
               <button
                 key={lang}
-                onClick={() => setSelectedLanguage(lang === selectedLanguage ? null : lang)}
+                onClick={() =>
+                  setSelectedLanguage(lang === selectedLanguage ? null : lang)
+                }
                 className={`
                     group relative px-3 py-1.5 rounded-lg transition-all duration-200
                     ${
                       selectedLanguage === lang
-                        ? "text-blue-400 bg-blue-500/10 ring-2 ring-blue-500/50"
+                        ? "text-purple-400 bg-purple-500/10 ring-2 ring-purple-500/50"
                         : "text-gray-400 hover:text-gray-300 bg-[#1e1e2e] hover:bg-[#262637] ring-1 ring-gray-800"
                     }
                   `}
               >
                 <div className="flex items-center gap-2">
-                  <img src={`/${lang}.png`} alt={lang} className="w-4 h-4 object-contain" />
+                  <img
+                    src={`/${lang}.png`}
+                    alt={lang}
+                    className="w-4 h-4 object-contain"
+                  />
                   <span className="text-sm">{lang}</span>
                 </div>
               </button>
@@ -141,7 +150,7 @@ function SnippetsPage() {
                   onClick={() => setView("grid")}
                   className={`p-2 rounded-md transition-all ${
                     view === "grid"
-                      ? "bg-blue-500/20 text-blue-400"
+                      ? "bg-purple-500/20 text-purple-400"
                       : "text-gray-400 hover:text-gray-300 hover:bg-[#262637]"
                   }`}
                 >
@@ -151,7 +160,7 @@ function SnippetsPage() {
                   onClick={() => setView("list")}
                   className={`p-2 rounded-md transition-all ${
                     view === "list"
-                      ? "bg-blue-500/20 text-blue-400"
+                      ? "bg-purple-500/20 text-purple-400"
                       : "text-gray-400 hover:text-gray-300 hover:bg-[#262637]"
                   }`}
                 >
@@ -192,7 +201,9 @@ function SnippetsPage() {
               >
                 <Code className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-xl font-medium text-white mb-3">No snippets found</h3>
+              <h3 className="text-xl font-medium text-white mb-3">
+                No snippets found
+              </h3>
               <p className="text-gray-400 mb-6">
                 {searchQuery || selectedLanguage
                   ? "Try adjusting your search query or filters"
@@ -217,8 +228,6 @@ function SnippetsPage() {
         )}
       </div>
     </div>
-    
   );
-
 }
 export default SnippetsPage;

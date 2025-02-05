@@ -44,7 +44,7 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => setisOpen(!isOpen)}
-        className={`group relative flex items-center gap-3 px-4 py-2.5 bg-[#1e1e2e]/80 
+        className={`group relative flex items-center gap-3 px-4 py-2.5 bg-[#1e1e2e]/80 hover:bg-[#3f2d48] 
         rounded-lg transition-all 
         duration-200 border border-gray-800/50 hover:border-gray-700
         ${!hasAccess && language !== "javascript" ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -105,7 +105,7 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
                     className="relative group px-2"
                   >
                     <button className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
-                      ${language === lang.id ? "bg-blue-500/10 text-blue-400" : "text-gray-300"}
+                      ${language === lang.id ? "bg-purple-500/10 text-purple-400" : "text-gray-300"}
                       ${isLocked ? "opacity-50" : "hover:bg-[#262637]"}
                     `}
                     onClick={() => handleLanguageClick(lang.id)}
@@ -116,7 +116,7 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"/>
 
                       <div className={`relative size-8 rounded-lg p-1.5 group-hover:scale-110 transition-transform
-                        ${language === lang.id ? "bg-blue-500/10" : "bg-gray-800/50"}
+                        ${language === lang.id ? "bg-purple-500/10" : "bg-gray-800/50"}
                       `}>
                         <Image
                           src={lang.logoPath}
@@ -134,7 +134,7 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
                       {/* selected language border */}
                       {language === lang.id && (
                         <motion.div
-                          className="absolute inset-0 border-2 border-blue-500/30 rounded-lg"
+                          className="absolute inset-0 border-2 border-purple-500/30 rounded-lg"
                           transition={{
                             type: "spring",
                             bounce: 0.2,
@@ -147,7 +147,7 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
                         <Lock className="w-4 h-4 text-gray-500"/>
                       ) : (
                         language === lang.id && (
-                          <Sparkles className="w-4 h-4 text-blue-400 animate-pulse"/>
+                          <Sparkles className="w-4 h-4 text-purple-400 animate-pulse"/>
                         )
                       )}
 

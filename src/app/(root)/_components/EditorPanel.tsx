@@ -68,14 +68,14 @@ function EditorPanel() {
               <Image src={"/" + language + ".png"} alt="Logo" width={24} height={24} />
             </div>
             <div>
-              <h2 className="text-sm font-medium text-white">Code Editor</h2>
-              <p className="text-xs text-gray-500">Write and execute your code</p>
+              <h2 className="text-sm font-medium text-purple-400">Code Editor</h2>
+              <p className="text-xs text-blue-500">Write and execute your code</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             {/* Font Size Slider */}
             <div className="flex items-center gap-3 px-3 py-2 bg-[#1e1e2e] rounded-lg ring-1 ring-white/5">
-              <TypeIcon className="size-4 text-gray-400" />
+              <TypeIcon className="size-4 text-purple-400" />
               <div className="flex items-center gap-3">
                 <input
                   type="range"
@@ -83,9 +83,9 @@ function EditorPanel() {
                   max="24"
                   value={fontSize}
                   onChange={(e) => handleFontSizeChange(parseInt(e.target.value))}
-                  className="w-20 h-1 bg-gray-600 rounded-lg cursor-pointer"
+                  className="w-20 h-1 bg-purple-600 rounded-lg cursor-pointer"
                 />
-                <span className="text-sm font-medium text-gray-400 min-w-[2rem] text-center">
+                <span className="text-sm font-medium text-purple-400 min-w-[2rem] text-center">
                   {fontSize}
                 </span>
               </div>
@@ -98,7 +98,7 @@ function EditorPanel() {
               className="p-2 bg-[#1e1e2e] hover:bg-[#2a2a3a] rounded-lg ring-1 ring-white/5 transition-colors"
               aria-label="Reset to default code"
             >
-              <RotateCcwIcon className="size-4 text-gray-400" />
+              <RotateCcwIcon className="size-4 text-purple-400" />
             </motion.button>
 
             <motion.button
@@ -106,7 +106,7 @@ function EditorPanel() {
               whileTap={{ scale: 0.98 }}
               onClick={() => setisShareDialogOpen(true)}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg overflow-hidden bg-gradient-to-r
-               from-blue-500 to-blue-600 opacity-90 hover:opacity-100 transition-opacity"
+               from-blue-500 to-purple-600 opacity-90 hover:opacity-100 transition-opacity"
             >
               <ShareIcon className="size-4 text-white" />
               <span className="text-sm font-medium text-white ">Share</span>
@@ -132,7 +132,7 @@ function EditorPanel() {
               renderWhitespace: "selection",
               fontFamily: '"Fira Code", "Cascadia Code", Consolas, monospace',
               fontLigatures: true,
-              cursorBlinking: "smooth",
+              cursorBlinking: "expand",
               smoothScrolling: true,
               contextmenu: true,
               renderLineHighlight: "all",

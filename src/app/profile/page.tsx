@@ -22,11 +22,11 @@ const TABS = [
     label: "Code Executions",
     icon: ListVideo,
   },
-  {
-    id: "starred",
-    label: "Starred Snippets",
-    icon: Star,
-  },
+  // {
+  //   id: "starred",
+  //   label: "Starred Snippets",
+  //   icon: Star,
+  // },
 ];
 
 
@@ -89,13 +89,13 @@ function ProfilePage() {
                   key={tab.id}
                   onClick={() => setactiveTab(tab.id as "executions" | "starred")}
                   className={`group flex items-center gap-2 px-6 py-2.5 rounded-lg transition-all duration-200 relative overflow-hidden ${
-                    activeTab === tab.id ? "text-blue-400" : "text-gray-400 hover:text-gray-300"
+                    activeTab === tab.id ? "text-purple-400" : "text-gray-400 hover:text-gray-300"
                   }`}
                 >
                   {activeTab === tab.id && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-blue-500/10 rounded-lg"
+                      className="absolute inset-0 bg-purple-500/10 rounded-lg"
                       transition={{
                         type: "spring",
                         bounce: 0.2,
@@ -126,7 +126,7 @@ function ProfilePage() {
                   {executions?.map((execution) => (
                     <div
                       key={execution._id}
-                      className="group rounded-xl overflow-hidden transition-all duration-300 hover:border-blue-500/50 hover:shadow-md hover:shadow-blue-500/50"
+                      className="group rounded-xl overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-md hover:shadow-purple-500/50"
                     >
                       <div className="flex items-center justify-between p-4 bg-black/30 border border-gray-800/50 rounded-t-xl">
                         <div className="flex items-center gap-4">
@@ -234,7 +234,7 @@ function ProfilePage() {
                             <div className="flex items-center justify-between mb-4">
                               <div className="flex items-center gap-3">
                                 <div className="relative">
-                                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition-opacity" />
+                                  <div className="absolute inset-0 bg-gradient-to-r from-purple-950 to-purple-850 rounded-lg blur opacity-20 group-hover:opacity-30 transition-opacity" />
                                   <Image
                                     src={`/${snippet?.language}.png`}
                                     alt={`${snippet?.language} logo`}
@@ -243,7 +243,7 @@ function ProfilePage() {
                                     height={40}
                                   />
                                 </div>
-                                <span className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-sm">
+                                <span className="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-sm">
                                   {snippet?.language}
                                 </span>
                               </div>
@@ -254,7 +254,7 @@ function ProfilePage() {
                                 <StarButton snippetId={snippet?._id} />
                               </div>
                             </div>
-                            <h2 className="text-xl font-semibold text-white mb-3 line-clamp-1 group-hover:text-blue-400 transition-colors">
+                            <h2 className="text-xl font-semibold text-white mb-3 line-clamp-1 group-hover:text-purple-400 transition-colors">
                               {snippet?.title}
                             </h2>
                             <div className="flex items-center justify-between text-sm text-gray-400">

@@ -40,7 +40,7 @@ async function Header() {
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="block text-lg font-semibold bg-gradient-to-r from-purple-400 via-blue-300 to-purple-400 text-transparent bg-clip-text">
+                  <span className="block text-lg font-thin bg-gradient-to-r from-purple-400 via-blue-300 to-purple-400 text-transparent bg-clip-text">
                     CodersHub
                   </span>
                   <span className="block text-xs text-purple-400/60 font-medium">
