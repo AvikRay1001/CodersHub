@@ -78,7 +78,7 @@ async function Header() {
                 <LanguageSelector hasAccess={Boolean(convexUser?.isPro)}/>
             </div>
 
-            {!convexUser?.isPro && (
+            {/* {!convexUser?.isPro && (
                 <Link
                     href="/pricing"
                     className="flex items-center gap-2 px-4 py-1.5 rounded-lg border border-amber-500/20 hover:border-amber-500/40 bg-gradient-to-r from-amber-500/10 
@@ -90,11 +90,9 @@ async function Header() {
                         Pro
                     </span>
                 </Link>
-            )}
+            )} */}
 
-            <SignedIn>
-                <RunButton/>
-            </SignedIn>
+              <RunButton/>
 
             <div className="pl-3 border-1 border-gray-800">
                 <HeaderProfileBtn/>

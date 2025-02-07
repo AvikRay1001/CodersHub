@@ -5,22 +5,19 @@ import { useEffect, useRef, useState } from "react";
 import { LANGUAGE_CONFIG } from "../_constants";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { ChevronDownIcon, Sparkles, Lock } from "lucide-react";
+import { ChevronDownIcon, Sparkles } from "lucide-react";
 import useMounted from "@/hooks/useMounted";
 
-
-function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
-
+function LanguageSelector() {
   const [isOpen, setisOpen] = useState(false);
-  const {language, setLanguage} = useCodeEditorStore();
+  const { language, setLanguage } = useCodeEditorStore();
   const mounted = useMounted();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const currentLanguageObj = LANGUAGE_CONFIG[language]
-
+  const currentLanguageObj = LANGUAGE_CONFIG[language];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if(dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setisOpen(false);
       }
     };
@@ -30,13 +27,10 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
   }, []);
 
   const handleLanguageClick = (langId: string) => {
-    if(!hasAccess && langId !== "javascript") return;
-        
     setLanguage(langId);
-    
-  }
+  };
 
-  if(!mounted) return null;
+  if (!mounted) return null;
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -44,17 +38,11 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => setisOpen(!isOpen)}
-        className={`group relative flex items-center gap-3 px-4 py-2.5 bg-[#1e1e2e]/80 hover:bg-[#3f2d48] 
-        rounded-lg transition-all 
-        duration-200 border border-gray-800/50 hover:border-gray-700
-        ${!hasAccess && language !== "javascript" ? "opacity-50 cursor-not-allowed" : ""}`}
+        className="group relative flex items-center gap-3 px-4 py-2.5 bg-[#1e1e2e]/80 hover:bg-[#3f2d48] 
+        rounded-lg transition-all duration-200 border border-gray-800/50 hover:border-gray-700"
       >
-
-        {/* Decoration */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/5 
-        rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-        aria-hidden="true"
-        />
+        rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
 
         <div className="size-6 rounded-md bg-gray-800/50 p-0.5 group-hover:scale-110 transition-transform">
           <Image
@@ -70,15 +58,12 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
           {currentLanguageObj.label}
         </span>
 
-
         <ChevronDownIcon
           className={`size-4 text-gray-400 transition-all duration-300 group-hover:text-gray-300 ${isOpen ? "rotate-180" : ""}`}
         />
-
       </motion.button>
 
       <AnimatePresence>
-
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 8, scale: 0.96 }}
@@ -93,79 +78,59 @@ function LanguageSelector({hasAccess}: {hasAccess: boolean}) {
             </div>
 
             <div className="max-h-[280px] overflow-y-auto overflow-x-hidden">
-              {Object.values(LANGUAGE_CONFIG).map((lang,index) => {
-                const isLocked = !hasAccess && lang.id !== "javascript";
-                
-                return (
-                  <motion.div
-                    key={lang.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="relative group px-2"
-                  >
-                    <button className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
-                      ${language === lang.id ? "bg-purple-500/10 text-purple-400" : "text-gray-300"}
-                      ${isLocked ? "opacity-50" : "hover:bg-[#262637]"}
-                    `}
+              {Object.values(LANGUAGE_CONFIG).map((lang, index) => (
+                <motion.div
+                  key={lang.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative group px-2"
+                >
+                  <button className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
+                      ${language === lang.id ? "bg-purple-500/10 text-purple-400" : "text-gray-300"} hover:bg-[#262637]`}
                     onClick={() => handleLanguageClick(lang.id)}
-                    disabled={isLocked}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"/>
+
+                    <div className={`relative size-8 rounded-lg p-1.5 group-hover:scale-110 transition-transform
+                        ${language === lang.id ? "bg-purple-500/10" : "bg-gray-800/50"}`}
                     >
-                      
-                      {/* decorator */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"/>
+                      <Image
+                        src={lang.logoPath}
+                        alt={`${lang.label} logo`}
+                        width={24}
+                        height={24}
+                        className="w-full h-full object-contain relative z-10"
+                      />
+                    </div>
 
-                      <div className={`relative size-8 rounded-lg p-1.5 group-hover:scale-110 transition-transform
-                        ${language === lang.id ? "bg-purple-500/10" : "bg-gray-800/50"}
-                      `}>
-                        <Image
-                          src={lang.logoPath}
-                          alt={`${lang.label} logo`}
-                          width={24}
-                          height={24}
-                          className="w-full h-full object-contain relative z-10"                          
-                        />
-                      </div>
+                    <span className="flex-1 text-left group-hover:text-white transition-colors">
+                      {lang.label}
+                    </span>
 
-                      <span className="flex-1 text-left group-hover:text-white transition-colors">
-                        {lang.label}
-                      </span>
+                    {language === lang.id && (
+                      <motion.div
+                        className="absolute inset-0 border-2 border-purple-500/30 rounded-lg"
+                        transition={{
+                          type: "spring",
+                          bounce: 0.2,
+                          duration: 0.6,
+                        }}
+                      />
+                    )}
 
-                      {/* selected language border */}
-                      {language === lang.id && (
-                        <motion.div
-                          className="absolute inset-0 border-2 border-purple-500/30 rounded-lg"
-                          transition={{
-                            type: "spring",
-                            bounce: 0.2,
-                            duration: 0.6,
-                          }}
-                        />
-                      )}
-
-                      {isLocked ? (
-                        <Lock className="w-4 h-4 text-gray-500"/>
-                      ) : (
-                        language === lang.id && (
-                          <Sparkles className="w-4 h-4 text-purple-400 animate-pulse"/>
-                        )
-                      )}
-
-
-                    </button>
-
-                  </motion.div>
-                );
-              })}
+                    {language === lang.id && (
+                      <Sparkles className="w-4 h-4 text-purple-400 animate-pulse"/>
+                    )}
+                  </button>
+                </motion.div>
+              ))}
             </div>
-
           </motion.div>
         )}
-
       </AnimatePresence>
-
     </div>
-  )
+  );
 }
 
-export default LanguageSelector
+export default LanguageSelector;
