@@ -1,15 +1,15 @@
 "use client"
 
+import useMounted from "@/hooks/useMounted";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
+import { SignedIn, useClerk } from "@clerk/nextjs";
+import { Editor } from "@monaco-editor/react";
+import { motion } from "framer-motion";
+import { RotateCcwIcon, ShareIcon, TypeIcon } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { LANGUAGE_CONFIG, defineMonacoThemes } from "../_constants";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { RotateCcwIcon, ShareIcon, TypeIcon } from "lucide-react";
-import { Editor } from "@monaco-editor/react";
-import { useClerk } from "@clerk/nextjs";
 import { EditorPanelSkeleton } from "./EditorPanelSkeleton";
-import useMounted from "@/hooks/useMounted";
 import ShareSnippetDialog from "./ShareSnippetDialog";
 
 
@@ -101,16 +101,18 @@ function EditorPanel() {
               <RotateCcwIcon className="size-4 text-purple-400" />
             </motion.button>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setisShareDialogOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg overflow-hidden bg-gradient-to-r
-               from-blue-500 to-purple-600 opacity-90 hover:opacity-100 transition-opacity"
-            >
-              <ShareIcon className="size-4 text-white" />
-              <span className="text-sm font-medium text-white ">Share</span>
-            </motion.button>
+            <SignedIn>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setisShareDialogOpen(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg overflow-hidden bg-gradient-to-r
+                from-blue-500 to-purple-600 opacity-90 hover:opacity-100 transition-opacity"
+              >
+                <ShareIcon className="size-4 text-white" />
+                <span className="text-sm font-medium text-white ">Share</span>
+              </motion.button>
+            </SignedIn>
           </div>
         </div>
 

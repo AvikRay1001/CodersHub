@@ -1,7 +1,7 @@
-import { create } from "zustand";
 import { LANGUAGE_CONFIG } from "@/app/(root)/_constants";
-import { Monaco } from "@monaco-editor/react";
 import { CodeEditorState } from "@/types";
+import { Monaco } from "@monaco-editor/react";
+import { create } from "zustand";
 
 const getInitialState = () => {
   // if we're on the server, return default values
@@ -34,8 +34,11 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
     error: null,
     editor: null,
     executionResult: null,
+    userInput: "",
 
     getCode: () => get().editor?.getValue() || "",
+
+    setUserInput: (userInput: string) => set({ userInput }),
 
     setEditor: (editor: Monaco) => {
       const savedCode = localStorage.getItem(`editor-code-${get().language}`);
@@ -55,7 +58,6 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
     },
 
     setLanguage: (language: string) => {
-      // save current language code before switching
       const currentCode = get().editor?.getValue();
       if (currentCode) {
         localStorage.setItem(`editor-code-${get().language}`, currentCode);
@@ -71,7 +73,7 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
     },
 
     runCode: async () => {
-        const { language, getCode } = get();
+        const { language, getCode, userInput } = get();
         const code = getCode();
   
         if (!code) {
@@ -82,58 +84,43 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
         set({ isRunning: true, error: null, output: "" });
   
         try {
-          const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
-          const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+          const { judge0Id } = LANGUAGE_CONFIG[language];
+          const response = await fetch("https://ce.judge0.com/submissions?base64_encoded=false&wait=true", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              language: runtime.language,
-              version: runtime.version,
-              files: [{ content: code }],
+              language_id: judge0Id,
+              source_code: code,
+              stdin: userInput,
             }),
           });
   
           const data = await response.json();
   
-          console.log("data back from piston:", data);
+          console.log("data back from judge0:", data);
   
-          // handle API-level erros
-          if (data.message) {
-            set({ error: data.message, executionResult: { code, output: "", error: data.message } });
-            return;
-          }
+          // Judge0 status handling
+          // status id 3: Accepted
+          // status id 4: Wrong Answer (usually for competitive coding, here it just means it ran)
+          // Other statuses signify errors
   
-          // handle compilation errors
-          if (data.compile && data.compile.code !== 0) {
-            const error = data.compile.stderr || data.compile.output;
-            set({
-              error,
-              executionResult: {
-                code,
-                output: "",
-                error,
-              },
-            });
-            return;
-          }
-  
-          if (data.run && data.run.code !== 0) {
-            const error = data.run.stderr || data.run.output;
-            set({
-              error,
-              executionResult: {
-                code,
-                output: "",
-                error,
-              },
-            });
-            return;
+          if (data.status && data.status.id > 4) {
+             const error = data.stderr || data.compile_output || data.message || "Execution error";
+             set({
+               error,
+               executionResult: {
+                 code,
+                 output: "",
+                 error,
+               },
+             });
+             return;
           }
   
           // if we get here, execution was successful
-          const output = data.run.output;
+          const output = data.stdout || "";
   
           set({
             output: output.trim(),
